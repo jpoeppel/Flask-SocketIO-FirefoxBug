@@ -1,0 +1,46 @@
+<html>
+    <head>
+       <title>Flask-SocketIO Test</title>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+       <script type="text/javascript" charset="utf-8">
+
+
+            var socket = io.connect();
+            
+            
+            // Event handler for new connections.
+            // The callback function is invoked when a connection with the
+            // server is established.
+            socket.on('connect', function() {
+                console.log("connected");
+                //socket.emit('my_event', {data: 'I\'m connected!'});
+            });
+
+            socket.on('my_response', function(msg) {
+               console.log("Get response: ", msg);
+               document.getElementById("text").innerHTML = msg.data;
+            });
+
+
+            if (window.addEventListener) {
+                window.addEventListener("load", setUpBtn);
+            } else {
+                window.attachEvent("onload", setUpBtn);   
+            }
+            
+            function setUpBtn() {
+                document.getElementById("testBtn").addEventListener("click", function(e) {
+                 socket.emit('my_event', {data: 'Testdata'}); 
+                    
+                });    
+                    
+            }
+    </script>
+    </head>
+    
+    <body>
+        <div id="text"></div>
+        <input id="testBtn" type="button" value="Test">
+    </body>
+
+</html>
